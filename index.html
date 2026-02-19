@@ -55,6 +55,21 @@
                         <input type="text" id="unidade" placeholder="Informe a unidade" required>
                     </div>
                     <div class="form-group">
+                        <label for="motivoSolicitacao">Motivo da Solicitação</label>
+                        <select id="motivoSolicitacao" required>
+                            <option value="">Selecione o motivo</option>
+                            <option value="Desligamento do colaborador comprometeu a operação">Desligamento do colaborador comprometeu a operação</option>
+                            <option value="Candidato desistiu no dia da admissão">Candidato desistiu no dia da admissão</option>
+                            <option value="Substituição por Férias">Substituição por Férias</option>
+                            <option value="Substituição por Afastamento Médico">Substituição por Afastamento Médico</option>
+                            <option value="Outro">Outro (especificar)</option>
+                        </select>
+                    </div>
+                    <div class="form-group hidden-section" id="outroMotivoGroup">
+                        <label for="outroMotivo">Especifique o Motivo</label>
+                        <input type="text" id="outroMotivo" placeholder="Digite o motivo da solicitação">
+                    </div>
+                    <div class="form-group">
                         <label for="tipoPrestador">Tipo de Prestador</label>
                         <div class="toggle-selector" id="tipoPrestadorSelector">
                             <button type="button" class="toggle-btn" data-value="motorista" id="btnMotorista">

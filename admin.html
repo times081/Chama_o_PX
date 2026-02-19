@@ -274,6 +274,10 @@
             gap: 4px;
         }
 
+        .detail-item.full-width {
+            grid-column: 1 / -1;
+        }
+
         .detail-item label {
             font-size: 0.75rem;
             color: var(--text-secondary);
@@ -406,6 +410,10 @@
                 <!-- Conteúdo dinâmico -->
             </div>
             <div class="modal-actions">
+                <button onclick="deleteRequest()" class="btn btn-secondary"
+                    style="background-color: var(--red-100); color: var(--red-700); border-color: var(--red-200); margin-right: auto;">
+                    🗑️ Excluir
+                </button>
                 <div class="status-selector">
                     <label style="font-weight: 600; color: var(--text-secondary);">Alterar Status:</label>
                     <select id="modalStatus">
@@ -728,6 +736,28 @@
         function closeModal() {
             document.getElementById('detailModal').classList.remove('active');
             currentDocId = null;
+        }
+
+        async function deleteRequest() {
+            if (!currentDocId) return;
+
+            if (confirm('Tem certeza que deseja excluir esta solicitação? Esta ação é irreversível.')) {
+                try {
+                    await db.collection("solicitacoes").doc(currentDocId).delete();
+
+                    // Remove from local array
+                    allRequests = allRequests.filter(r => r.id !== currentDocId);
+
+                    updateStats();
+                    applyFilters();
+                    closeModal();
+
+                    alert('Solicitação excluída com sucesso!');
+                } catch (error) {
+                    console.error("Erro ao excluir:", error);
+                    alert('Erro ao excluir a solicitação: ' + error.message);
+                }
+            }
         }
 
         async function updateStatus() {

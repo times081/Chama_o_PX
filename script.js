@@ -32,6 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const tipoImplemento = document.getElementById('tipoImplemento');
     const outroVeiculoGroup = document.getElementById('outroVeiculoGroup');
     const outroImplementoGroup = document.getElementById('outroImplementoGroup');
+    const motivoSolicitacao = document.getElementById('motivoSolicitacao');
+    const outroMotivoGroup = document.getElementById('outroMotivoGroup');
+    const outroMotivo = document.getElementById('outroMotivo');
     const progressFill = document.getElementById('progressFill');
     const progressLabel = document.getElementById('progressLabel');
     const toast = document.getElementById('toast');
@@ -113,6 +116,23 @@ document.addEventListener('DOMContentLoaded', () => {
             outroImplementoGroup.classList.remove('visible');
         }
         updateCosts();
+        updateCosts();
+        updateProgress();
+    });
+
+    // ========================================
+    // MOTIVO: SHOW "OUTRO" FIELD
+    // ========================================
+    motivoSolicitacao.addEventListener('change', () => {
+        const val = motivoSolicitacao.value;
+        if (val === 'Outro') {
+            outroMotivoGroup.classList.add('visible');
+            outroMotivo.required = true;
+        } else {
+            outroMotivoGroup.classList.remove('visible');
+            outroMotivo.required = false;
+            outroMotivo.value = '';
+        }
         updateProgress();
     });
 
@@ -362,7 +382,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Basic fields (3 items)
         if (document.getElementById('nomeCompleto').value.trim()) filledFields++;
+        if (document.getElementById('nomeCompleto').value.trim()) filledFields++;
         if (document.getElementById('unidade').value.trim()) filledFields++;
+        if (motivoSolicitacao.value) {
+            if (motivoSolicitacao.value === 'Outro') {
+                if (outroMotivo.value.trim()) filledFields++;
+            } else {
+                filledFields++;
+            }
+        }
         if (type) filledFields++;
 
         if (type === 'motorista') {
@@ -432,8 +460,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const nome = document.getElementById('nomeCompleto').value.trim();
         const unidade = document.getElementById('unidade').value.trim();
         const tipo = tipoPrestadorInput.value;
+        const motivo = motivoSolicitacao.value;
 
-        if (!nome || !unidade || !tipo) {
+        if (!nome || !unidade || !tipo || !motivo) {
             showToast('Por favor, preencha todos os campos obrigatórios.', 'error');
             return;
         }
@@ -513,7 +542,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function collectFormData() {
         const data = {
             nomeCompleto: document.getElementById('nomeCompleto').value,
+            nomeCompleto: document.getElementById('nomeCompleto').value,
             unidade: document.getElementById('unidade').value,
+            motivoSolicitacao: motivoSolicitacao.value === 'Outro' ? outroMotivo.value : motivoSolicitacao.value,
             tipoPrestador: tipoPrestadorInput.value,
         };
 
@@ -650,7 +681,9 @@ document.addEventListener('DOMContentLoaded', () => {
         motoristaSection.classList.remove('visible');
         ajudanteSection.classList.remove('visible');
         outroVeiculoGroup.classList.remove('visible');
+        outroVeiculoGroup.classList.remove('visible');
         outroImplementoGroup.classList.remove('visible');
+        outroMotivoGroup.classList.remove('visible');
 
         // Show cost summary
         costSummary.style.display = '';

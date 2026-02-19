@@ -107,6 +107,10 @@ function openModal(data) {
                     <label>Unidade</label>
                     ${copySpan(data.unidade)}
                 </div>
+                <div class="detail-item full-width">
+                    <label>Motivo da Solicitação</label>
+                    ${copySpan(data.motivoSolicitacao)}
+                </div>
                 <div class="detail-item">
                     <label>Tipo de Prestador</label>
                     ${copySpan(data.tipoPrestador ? data.tipoPrestador.toUpperCase() : null)}
